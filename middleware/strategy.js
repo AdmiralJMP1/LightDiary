@@ -11,8 +11,8 @@ module.exports = function() {
   });
 
   passport.use(new GitHubStrategy({
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIEN_SECRET,
+      clientID: 'e4b0933bfe7d85a58ffc',
+      clientSecret: '015e95072f02b4d177b57554dc7c8e1736b518be',
       callbackURL: 'http://light-diary.herokuapp.com/callback'
     },
     function(accessToken, refreshToken, profile, done) {
