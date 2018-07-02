@@ -1,0 +1,22 @@
+{
+  "name": "light-diary",
+  "version": "0.1.0",
+  "description": "simple diary",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdmiralJMP1/LightDiary.git"
+  },
+  "author": "Oleg Khomyakov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AdmiralJMP1/LightDiary/issues"
+  },
+  "homepage": "https://github.com/AdmiralJMP1/LightDiary#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
