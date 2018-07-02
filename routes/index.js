@@ -4,9 +4,7 @@ var public_article = require("./public-article");
 var passport = require('passport');
 
 module.exports = function(app) {
-  app.get('/', function(res,req){
-    req.send('in alive');
-  });
+  app.get('/', main);
   app.get('/logined', logined);
   app.get('/public-article', public_article);
 
