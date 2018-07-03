@@ -1,0 +1,11 @@
+header
+	nav.menu
+		a(href="/") Main
+		a(href="/logined") Logined
+		a(href="/public-article") Public Article
+	.user
+		if username
+		 	.user__name= username
+			a(href="/logout") Logout
+		else
+			a(href="/login").login_button Login

@@ -1,0 +1,13 @@
+header {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: space-between;
+}
+
+.menu a {
+	display: inline-block;
+	margin-right: 10px;
+}

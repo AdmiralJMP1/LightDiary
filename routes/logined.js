@@ -1,7 +1,7 @@
 module.exports = function(req, res) {
   // console.log(req.user.username);
-   if(req.user)
-    res.send(req.user.username + ' from log');
+  if(req.user)
+  	res.render('logined', {username: req.user.username});
   else
-    res.send('unlogined from log');
+  	res.render('logined');
 };

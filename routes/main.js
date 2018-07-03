@@ -1,6 +1,6 @@
 module.exports = function(req, res) {
-   if(req.user)
-    res.send(req.user.username + ' from main');
+  if(req.user)
+  	res.render('index', {username: req.user.username});
   else
-    res.send('unlogined from main');
+  	res.render('index');
 };

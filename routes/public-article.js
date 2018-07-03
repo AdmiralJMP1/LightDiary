@@ -1,6 +1,8 @@
 module.exports = function(req, res) {
-   if(req.user)
-    res.send(req.user.username + ' from art');
+  if(req.user)
+  {
+  	res.render('public-article', {username: req.user.username});
+  }
   else
-    res.send('unlogined from art');
+  	res.render('public-article');
 };

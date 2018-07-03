@@ -4,6 +4,10 @@ module.exports = function (app, express) {
   var passport = require('passport');
   var strategy = require('./strategy')();
 
+  // pug
+  app.set('view engine', 'pug');
+  app.set('views', './views')
+
   // sessions
   app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -18,4 +22,8 @@ module.exports = function (app, express) {
 
   // router
   router(app);
+  
+  // static
+  app.use(express.static('static'));
+  app.use('/static', express.static('static'));
 };
