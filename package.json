@@ -4,8 +4,7 @@
   "description": "simple diary",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "jest"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,6 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-jest": "^23.2.0",
-    "babel-preset-env": "^1.7.0",
-    "jest": "^23.2.0"
+    "babel-preset-env": "^1.7.0"
   }
 }
