@@ -14,8 +14,7 @@ module.exports = function() {
       where: {id: id}
     }).then(foundUser => {
       done(null, foundUser);
-    }
-
+    });
   });
 
   passport.use(new GitHubStrategy({
