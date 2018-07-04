@@ -29,7 +29,7 @@ module.exports = function() {
             github_id: profile.id
           }
         }).then(github_user => {
-          if (github_users) {
+          if (github_user) {
             return done(null, github_user);
           } else {
             User.create({ 
