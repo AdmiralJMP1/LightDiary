@@ -42,7 +42,7 @@ module.exports = function() {
                 token: accessToken
               })
             }).then(newGithubUser => {
-              return done(null, newUser);
+              return done(null, newGithubUser);
             })
           }
         }).catch(err => {
