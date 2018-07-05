@@ -4,7 +4,7 @@ var passport = require('passport');
 
 module.exports = function(app) {
   app.get('/', main);
-  app.get('/app', logined);
+  app.get('/app', app);
 
   app.get('/login', function(req,res, next){
     req.session.redirectTo = req.header('Referer');
