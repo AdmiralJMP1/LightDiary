@@ -1,12 +1,10 @@
 var main = require('./main');
-var logined = require('./logined');
-var public_article = require("./public-article"); 
+var app = require('./app');
 var passport = require('passport');
 
 module.exports = function(app) {
   app.get('/', main);
-  app.get('/logined', logined);
-  app.get('/public-article', public_article);
+  app.get('/app', logined);
 
   app.get('/login', function(req,res, next){
     req.session.redirectTo = req.header('Referer');
@@ -15,7 +13,7 @@ module.exports = function(app) {
     passport.authenticate('github')
   );
   app.get('/callback', 
-    passport.authenticate('github', { failureRedirect: '/login_pls'}),
+    passport.authenticate('github', { failureRedirect: '/'}),
     function(req, res) {
       if(req.session.redirectTo){
         res.redirect(req.session.redirectTo);   
