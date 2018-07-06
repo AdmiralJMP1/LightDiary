@@ -3,6 +3,7 @@ var HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
+  // devtool: 'eval-source-map',
   entry:  __dirname + "/app/main.js",
   output: {
     path: __dirname + "/static",
@@ -20,7 +21,18 @@ module.exports = {
         resolve: { extensions: ['*', '.js', '.jsx'] },
       },
       {
-        test: /\.css$/, loader: 'style!css?modules'
+        test: /\.css$/,
+        use: [
+          { 
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          }
+        ]
       }
     ]
   },
