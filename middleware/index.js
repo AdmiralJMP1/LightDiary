@@ -13,7 +13,7 @@ module.exports = function (app, express) {
 
   // sessions
   app.use(session({
-    secret: process.env.SESSION_SECRET || config.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     maxAge: 60*60*24*2
