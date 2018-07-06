@@ -20,8 +20,8 @@ module.exports = function() {
   });
 
   passport.use(new GitHubStrategy({
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      clientID: process.env.GITHUB_CLIENT_ID || config.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || config.GITHUB_CLIENT_SECRET,
       callbackURL: 'http://light-diary.herokuapp.com/callback'
     },
     function(accessToken, refreshToken, profile, done) {
