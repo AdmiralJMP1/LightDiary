@@ -3,7 +3,7 @@ var HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  entry:  __dirname + "/app/main.js",
+  entry:  __dirname + "/app/main.jsx",
   output: {
     path: __dirname + "/static",
     filename: "bundle.js"

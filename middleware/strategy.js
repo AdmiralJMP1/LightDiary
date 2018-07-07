@@ -1,56 +1,53 @@
-var config = require("../config")();
+import { Strategy as GitHubStrategy } from 'passport-github';
+import passport from 'passport';
+import User from '../model/users';
+import GithubUsers from '../model/github_users';
 
-module.exports = function() {
-  var GitHubStrategy = require('passport-github').Strategy;
-  var passport = require('passport');
-
-  var User = require('../model/users');
-  var Github_users = require('../model/github_users');
-
-  passport.serializeUser(function(user, done) {
+function setStrategy() {
+  console.log(process.env.DATABASE_HOST);
+  passport.serializeUser((user, done) => {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function(id, done) {
+  passport.deserializeUser((id, done) => {
     User.findOne({
-      where: {id: id}
-    }).then(foundUser => {
+      where: { id },
+    }).then((foundUser) => {
       done(null, foundUser);
     });
   });
 
-  passport.use(new GitHubStrategy({
-      clientID: process.env.GITHUB_CLIENT_ID || config.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET || config.GITHUB_CLIENT_SECRET,
-      callbackURL: 'http://light-diary.herokuapp.com/callback'
+  passport.use(new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      callbackURL: `${process.env.DOMEN}/callback`,
     },
-    function(accessToken, refreshToken, profile, done) {
-      process.nextTick(function() {
-        Github_users.findOne({
+    (accessToken, refreshToken, profile, done) => {
+      process.nextTick(() => {
+        GithubUsers.findOne({
           where: {
-            github_id: profile.id
-          }
-        }).then(github_user => {
-          if (github_user) {
-            return done(null, github_user);
+            github_id: profile.id,
+          },
+        }).then((githubUser) => {
+          if (githubUser) {
+            done(null, githubUser);
           } else {
-            User.create({ 
-              username: profile.username
-            }).then(newUser => {
-              Github_users.create({
+            User.create({
+              username: profile.username,
+            }).then((newUser) => {
+              GithubUsers.create({
                 id: newUser.id,
                 github_id: profile.id,
                 name: profile.username,
-                token: accessToken
-              })
-            }).then(newGithubUser => {
-              return done(null, newGithubUser);
-            })
+                token: accessToken,
+              }).then(newGithubUser => done(null, newGithubUser)).catch(err => done(err));
+            }).catch(err => done(err));
           }
-        }).catch(err => {
-          return done(err)
-        });
+        }).catch(err => done(err));
       });
-    }
+    },
   ));
-};
+}
+
+export default setStrategy;

@@ -1,22 +1,20 @@
-var router = require('../routes');
-var session = require('express-session');
-var passport = require('passport');
-var strategy = require('./strategy')();
-var config = require("../config")();
+import session from 'express-session';
+import passport from 'passport';
+import router from '../routes';
+import setStrategy from './strategy';
 
-module.exports = function (app, express) {
-
-
+function middleware(app, express) {
+  setStrategy();
   // pug
   app.set('view engine', 'pug');
-  app.set('views', './views')
+  app.set('views', './views');
 
   // sessions
   app.use(session({
-    secret: process.env.SESSION_SECRET || config.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    maxAge: 60*60*24*2
+    maxAge: 60 * 60 * 24 * 2,
   }));
 
   // passport
@@ -25,8 +23,10 @@ module.exports = function (app, express) {
 
   // router
   router(app);
-  
+
   // static
   app.use(express.static('static'));
   app.use('/static', express.static('static'));
-};
+}
+
+export default middleware;

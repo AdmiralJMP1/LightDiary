@@ -1,9 +1,11 @@
-// var express = require('express');
 import express from 'express';
-var app = express();
-var middleware = require('./middleware')(app, express);
-var config = require("./config")();
+import middleware from './middleware';
+import { config } from 'dotenv';
 
-app.listen(process.env.PORT || config.PORT, function(){
-    console.log('Express server listening');
+config();
+const app = express();
+middleware(app, express);
+
+app.listen(process.env.PORT, () => {
+  console.log('Express server listening');
 });
