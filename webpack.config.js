@@ -1,9 +1,8 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  // devtool: 'eval-source-map',
   entry:  __dirname + "/app/main.js",
   output: {
     path: __dirname + "/static",
@@ -22,21 +21,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          { 
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true
-            }
-          }
-        ]
+        use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader']
       }
     ]
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "appStyle.css"
+    }),
     new HtmlWebpackPlugin({
       template: __dirname + "/app/app.template.pug",
       filename: __dirname + '/views/application_page.pug'
