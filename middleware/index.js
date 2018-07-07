@@ -2,7 +2,7 @@ var router = require('../routes');
 var session = require('express-session');
 var passport = require('passport');
 var strategy = require('./strategy')();
-var config = require('../server_config');
+var config = require("../config")();
 
 module.exports = function (app, express) {
 

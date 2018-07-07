@@ -1,4 +1,4 @@
-var config = require('../server_config');
+var config = require("../config")();
 
 module.exports = function() {
   var GitHubStrategy = require('passport-github').Strategy;
