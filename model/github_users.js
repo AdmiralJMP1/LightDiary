@@ -1,10 +1,14 @@
-const Sequelize = require("sequelize");
-const db = require("./db");
+import Sequelize from 'sequelize';
+import db from './db';
 
-const Github_users = db.define('github_users', {
-    id: { type: Sequelize.INTEGER, primaryKey: true, references: {
+const GithubUsers = db.define('github_users',
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      references: {
         model: 'user',
-        key: 'id'
+        key: 'id',
       },
     },
     token: Sequelize.STRING(100),
@@ -12,8 +16,7 @@ const Github_users = db.define('github_users', {
     name: Sequelize.STRING(100),
   },
   {
-    timestamps: false
-  }
-);
+    timestamps: false,
+  });
 
-module.exports = Github_users;
+export default GithubUsers;

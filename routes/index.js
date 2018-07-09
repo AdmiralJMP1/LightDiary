@@ -1,29 +1,33 @@
-var main = require('./main');
-var application_page = require('./application_page');
-var passport = require('passport');
+import passport from 'passport';
+import main from './main';
+import applicationPage from './application_page';
 
-module.exports = function(app) {
+function router(app) {
   app.get('/', main);
-  app.get('/app', application_page);
+  app.get('/app', applicationPage);
 
-  app.get('/login', function(req,res, next){
-    req.session.redirectTo = req.header('Referer');
-    next();
+  app.get('/login',
+    (req, res, next) => {
+      req.session.redirectTo = req.header('Referer');
+      next();
     },
-    passport.authenticate('github')
-  );
-  app.get('/callback', 
-    passport.authenticate('github', { failureRedirect: '/'}),
-    function(req, res) {
-      if(req.session.redirectTo){
-        res.redirect(req.session.redirectTo);   
+    passport.authenticate('github'));
+
+  app.get('/callback',
+    passport.authenticate('github', { failureRedirect: '/' }),
+    (req, res) => {
+      if (req.session.redirectTo) {
+        res.redirect(req.session.redirectTo);
+      } else {
+        res.redirect('/logined');
       }
-      else
-        res.redirect('/logined')
-  });
-  
-  app.get('/logout', function(req, res){
-    req.logout();
-    res.redirect(req.header('Referer'));
-  });
-};
+    });
+
+  app.get('/logout',
+    (req, res) => {
+      req.logout();
+      res.redirect(req.header('Referer'));
+    });
+}
+
+export default router;
