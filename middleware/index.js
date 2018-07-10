@@ -1,14 +1,14 @@
 import session from 'express-session';
 import passport from 'passport';
-import initialiseRouter from '../routes';
+import initializeRouter from '../routes';
 import setStrategy from './strategy';
 
-function initialisePug(app) {
+function initializePug(app) {
   app.set('view engine', 'pug');
   app.set('views', './views');
 }
 
-function initialiseSessions(app) {
+function initializeSessions(app) {
   app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -17,23 +17,23 @@ function initialiseSessions(app) {
   }));
 }
 
-function initialisePassport(app) {
+function initializePassport(app) {
   app.use(passport.initialize());
   app.use(passport.session());
 }
 
-function initialiseStatic(app, express) {
+function initializeStatic(app, express) {
   app.use(express.static('static'));
   app.use('/static', express.static('static'));
 }
 
 function middleware(app, express) {
   setStrategy();
-  initialisePug(app);
-  initialiseSessions(app);
-  initialisePassport(app);
-  initialiseRouter(app);
-  initialiseStatic(app, express);
+  initializePug(app);
+  initializeSessions(app);
+  initializePassport(app);
+  initializeRouter(app);
+  initializeStatic(app, express);
 }
 
 export default middleware;

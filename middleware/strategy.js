@@ -7,28 +7,38 @@ const strategy = async (accessToken, refreshToken, profile, done) => {
   try {
     const githubUser = await GithubUsers.findOne({
       where: {
-        github_id: profile.id,
+        githubID: profile.id,
       },
     });
-
     if (githubUser) {
-      done(null, githubUser);
-    } else {
-      const newUser = await User.create({
-        username: profile.username,
-      });
-      if (newUser) {
-        const newGithubUser = await GithubUsers.create({
-          id: newUser.id,
-          github_id: profile.id,
-          name: profile.username,
-          token: accessToken,
-        });
+      return done(null, githubUser);
+    }
 
-        if (newGithubUser) {
-          done(null, newGithubUser);
-        }
-      }
+    const newUser = await User.create({
+      username: profile.username,
+    });
+    const newGithubUser = await GithubUsers.create({
+      id: newUser.id,
+      githubID: profile.id,
+      name: profile.username,
+      token: accessToken,
+    });
+
+    return done(null, newGithubUser);
+  } catch (err) {
+    return done(err);
+  }
+};
+
+const deserialize = async (id, done) => {
+  try {
+    const foundUser = await User.findOne({
+      where: { id },
+    });
+    if (foundUser) {
+      done(null, foundUser);
+    } else {
+      throw new Error('Not Found User on Deserialize');
     }
   } catch (err) {
     done(err);
@@ -40,19 +50,15 @@ function setStrategy() {
     done(null, user.id);
   });
 
-  passport.deserializeUser((id, done) => {
-    User.findOne({
-      where: { id },
-    }).then((foundUser) => {
-      done(null, foundUser);
-    });
-  });
+  passport.deserializeUser((id, done) => (
+    deserialize(id, done)
+  ));
 
   passport.use(new GitHubStrategy(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: `${process.env.DOMEN}/callback`,
+      callbackURL: process.env.CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => (
       strategy(accessToken, refreshToken, profile, done)

@@ -12,7 +12,10 @@ const GithubUsers = db.define('github_users',
       },
     },
     token: Sequelize.STRING(100),
-    github_id: Sequelize.STRING(100),
+    githubID: {
+      type: Sequelize.STRING(100),
+      field: 'github_id',
+    },
     name: Sequelize.STRING(100),
   },
   {
