@@ -1,0 +1,10 @@
+header
+  nav.menu
+    a(href="/") Главная
+    a(href="/app") Приложение
+  .user
+    if username
+      .user__name= username
+      a(href="/logout") Logout
+    else
+      a(href="/login").login_button Login

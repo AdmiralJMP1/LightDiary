@@ -1,0 +1,15 @@
+extends modules/main
+
+block vars
+  - var title = 'Главная';
+
+block content
+  h1 Главная
+  .content Здесь мог быть текст описывающий крутость этого сайта, но пока он не готов <br> Но уже есть возможность зайти через гит хаб
+  .signup_links
+    if username
+      .signup_links__text Поскольку вход уже выполнен, этот текст бесполезен, хооотя... можно выйти
+      a(href="/logout") Выйти
+    else 
+      .signup_links__text Здесь можно выбрать удобный способ входа(со временем список пополниться)
+      a(href="/login").signup_links Войти с помощью GitHub
