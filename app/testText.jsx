@@ -1,9 +1,9 @@
 import React from 'react';
 
-const TestComponent = () => (
+const TestText = () => (
   <div>
     Some test text
   </div>
 );
 
-export default TestComponent;
+export default TestText;
