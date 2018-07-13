@@ -1,9 +1,9 @@
 import React from 'react';
 
-const TestComponent = () => (
-  <div>
-    Some test text
-  </div>
-);
+class TestComponent extends React.Component {
+  render() {
+    return <h1>Hello, this TestComponent</h1>;
+  }
+}
 
 export default TestComponent;
