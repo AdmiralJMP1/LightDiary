@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import TestText from './testText';
 import './appStyle.css';
 
-render(<TestText />, document.getElementById('app'));
+render(<h1>Hello, APP!</h1>, document.getElementById('app'));

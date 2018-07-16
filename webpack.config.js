@@ -4,9 +4,9 @@ const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: path.join(__dirname, '/app/main.jsx'),
+  entry: path.join(__dirname, 'app', 'main.jsx'),
   output: {
-    path: path.join(__dirname, '/static'),
+    path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
   },
   module: {
@@ -31,8 +31,8 @@ module.exports = {
       filename: 'appStyle.css',
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '/app/app.template.pug'),
-      filename: path.join(__dirname, '/views/application_page.pug'),
+      template: path.join(__dirname, 'app', 'app.template.pug'),
+      filename: path.join(__dirname, 'views', 'application_page.pug'),
     }),
     new HtmlWebpackPugPlugin(),
   ],
