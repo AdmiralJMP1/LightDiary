@@ -4,6 +4,7 @@
   "description": "simple diary",
   "main": "server.js",
   "scripts": {
+    "build-start": "webpack && node -r babel-register -r babel-polyfill server.js",
     "start": "node -r babel-register -r babel-polyfill server.js",
     "dev-start": "nodemon -r babel-register -r babel-polyfill server.js",
     "build": "webpack",
