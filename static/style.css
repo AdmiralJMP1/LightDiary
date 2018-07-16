@@ -1,3 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+}
+
+a {
+	text-decoration: none;
+	color: #aaa;
+}
+
 header {
 	display: -webkit-flex;
 	display: -moz-flex;
@@ -5,6 +20,35 @@ header {
 	display: -o-flex;
 	display: flex;
 	justify-content: space-between;
+	color: #aaa;
+}
+
+input {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #fff;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #fff;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #fff;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #fff;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #fff;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+   color:    #fff;
 }
 
 .menu a {
@@ -12,6 +56,13 @@ header {
 	margin-right: 10px;
 }
 
-.signup_links{
+.signup_links {
   margin-top: 30px;
+}
+
+.signup_link {
+	display: inline-block;
+  border: 3px solid #aaa;
+	padding: 5px;
+	color: #aaa;
 }

@@ -4,9 +4,10 @@
   "description": "simple diary",
   "main": "server.js",
   "scripts": {
-    "build-start": "webpack && node -r babel-register -r babel-polyfill server.js",
     "start": "node -r babel-register -r babel-polyfill server.js",
+    "dev-start": "nodemon -r babel-register -r babel-polyfill server.js",
     "build": "webpack",
+    "watch": "webpack --watch",
     "eslint": "eslint",
     "eslint-fix": "eslint --fix"
   },
@@ -53,6 +54,7 @@
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-pug-plugin": "^0.3.0",
     "mini-css-extract-plugin": "^0.4.1",
+    "nodemon": "^1.18.2",
     "style-loader": "^0.21.0",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8"

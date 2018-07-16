@@ -1,59 +1,84 @@
 import React from 'react';
 import Row from './row';
 
-// function Board(prop) {
-//   const numbers = prop.numbers;
-//   const rowList = numbers.map((number) =>
-//     <Row key = {number.toString()}
-//          value = {number} />
-//   );
-//   return (
-//     <div>
-//       {rowList}
-//     </div>
-//   );
-
-// };
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
 
-    this.addRow = this.addRow.bind(this);
-    this.createRowList = this.createRowList.bind(this);
-
-    const numbers = [];
-    const rowList = this.createRowList(numbers);
     this.state = {
-      numbers: numbers,
-      rowList: rowList,
+      rowList: [],
+      rowName: '',
     };
-  }
-// this.state.numbers.push(this.state.numbers.lenght);
-  addRow(){
-    // const newNumbers = [1,2,3];
-    this.state.numbers.push(this.state.numbers.length + 1);
-    const newRowList = this.createRowList(this.state.numbers);
-    this.setState(prevState => ({
-      rowList: newRowList,
-    }))
+
+    this.addRow = this.addRow.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
+    this.rowTextUpdate = this.rowTextUpdate.bind(this);
+
   }
 
-  createRowList(numbers){
-    return numbers.map((number) =>
-      <Row key = {number.toString()}
-           value = {number} />
+  addRow(event) {
+    event.preventDefault();
+    if(this.state.rowName === '') {
+      alert('Please enter a row name');
+      return;
+    }
+    if(this.state.rowList.indexOf(this.state.rowName) !== -1) {
+      alert('Please enter a NEW row name');
+      return;
+    }
+    const newRowList = this.state.rowList;
+    newRowList.push(this.state.rowName);
+
+    this.setState(
+      {
+        rowList: newRowList,
+        rowName: '',
+      }
     );
   }
 
-  render(){ 
+  deleteRow(id) {
+    const newRowList = this.state.rowList;
+    newRowList.splice(id, 1);
+
+    this.setState({rowList: newRowList});
+  }
+
+  rowTextUpdate(event) {
+    this.setState({rowName: event.target.value});
+  }
+
+  render() {
+    const rows = this.state.rowList.map((name, id) => (
+      <Row
+        key={id}
+        name={name}
+        id={id}
+        clickAction={this.deleteRow}
+      />
+    ));
     return (
-      <div>
-        {this.state.rowList}
-        <button onClick={this.addRow}>+</button>
+      <div class="board">
+        <div class="board__name">
+          Board {this.props.name}
+        </div>
+        <div class="row-wrapper">
+          { rows }
+        </div>
+        <form 
+          onSubmit={this.addRow}
+          class="new-row-form">
+          <input
+            type="text"
+            placeholder="Enter row name"
+            onChange={this.rowTextUpdate}
+            value={this.state.rowName} />
+          <input type="submit" value="+"/>
+        </form>
       </div>
-    );
+    )
   }
 }
 
-export default Board;
+export default Board; 
