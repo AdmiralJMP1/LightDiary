@@ -1,73 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import TextItem from './textItem';
+import ContainerItem from './containerItem';
 
-class ItemList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      items: [],
-      itemName: '',
-    };
-
-    this.addItem = this.addItem.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.deleteItemsList = this.deleteItemsList.bind(this);
-    this.itemTextUpdate = this.itemTextUpdate.bind(this);
-  }
-
-  addItem(event) {
-    event.preventDefault();
-    const { itemName } = this.state;
-    const { items } = this.state;
-    if (itemName === '') {
-      alert('Please enter a item name');
-      return;
-    }
-    if (items.indexOf(itemName) !== -1) {
-      alert('Please enter a NEW rowItem name');
-      return;
-    }
-    const newItems = items;
-    newItems.push(itemName);
-
-    this.setState(
-      {
-        items: newItems,
-        itemName: '',
-      },
-    );
-  }
-
-  deleteItem(id) {
-    const { items } = this.state;
-    const newItems = items;
-    newItems.splice(id, 1);
-
-    this.setState({ items: newItems });
-  }
-
-  deleteItemsList() {
-    const { id } = this.props;
-    const { clickAction } = this.props;
-    clickAction(id);
-  }
-
-  itemTextUpdate(event) {
-    this.setState({ itemName: event.target.value });
-  }
-
+class ItemList extends ContainerItem {
   render() {
-    const { items } = this.state;
+    const { innerItems } = this.state;
     const { name } = this.props;
-    const { itemName } = this.state;
-    const listItems = items.map((text, id) => (
+    const { newItemName } = this.state;
+    const listItems = innerItems.map((text, id) => (
       <TextItem
         key={text}
-        text={text}
+        name={text}
         id={id}
-        clickAction={this.deleteItem}
+        clickAction={this.deleteInnerItem}
       />
     ));
     return (
@@ -80,7 +25,7 @@ class ItemList extends React.Component {
             <div className="items-list__menu">
               <button
                 type="button"
-                onClick={this.deleteItemsList}
+                onClick={this.selfDelete}
                 className="items-list__delete"
               >
                 Delete Item
@@ -91,28 +36,21 @@ class ItemList extends React.Component {
         <div className="items-list__items">
           { listItems }
           <form
-            onSubmit={this.addItem}
+            onSubmit={this.addInnerItem}
             className="new-item-form"
           >
             <input
               type="text"
               placeholder="Enter item text"
-              onChange={this.itemTextUpdate}
-              value={itemName}
+              onChange={this.newItemNameUpdate}
+              value={newItemName}
             />
             <input type="submit" value="+" />
           </form>
         </div>
-
       </div>
     );
   }
 }
-
-ItemList.propTypes = {
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  clickAction: PropTypes.func.isRequired,
-};
 
 export default ItemList;
