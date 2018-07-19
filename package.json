@@ -8,7 +8,9 @@
     "start": "node -r babel-register -r babel-polyfill server.js",
     "dev-start": "nodemon -r babel-register -r babel-polyfill server.js",
     "build": "webpack",
+    "dev-build": "webpack --mode development",
     "watch": "webpack --watch",
+    "dev-watch": "webpack --mode development --watch",
     "eslint": "eslint",
     "eslint-fix": "eslint --fix"
   },
@@ -30,6 +32,7 @@
     "passport-github": "^1.1.0",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
+    "prop-types": "^15.6.2",
     "pug": "^2.0.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

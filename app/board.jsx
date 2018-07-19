@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Row from './row';
-
 
 class Board extends React.Component {
   constructor(props) {
@@ -14,71 +14,84 @@ class Board extends React.Component {
     this.addRow = this.addRow.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
     this.rowTextUpdate = this.rowTextUpdate.bind(this);
-
   }
 
   addRow(event) {
     event.preventDefault();
-    if(this.state.rowName === '') {
+    const { rowName } = this.state;
+    const { rowList } = this.state;
+    if (rowName === '') {
       alert('Please enter a row name');
       return;
     }
-    if(this.state.rowList.indexOf(this.state.rowName) !== -1) {
+    if (rowList.indexOf(rowName) !== -1) {
       alert('Please enter a NEW row name');
       return;
     }
-    const newRowList = this.state.rowList;
-    newRowList.push(this.state.rowName);
+    const newRowList = rowList;
+    newRowList.push(rowName);
 
     this.setState(
       {
         rowList: newRowList,
         rowName: '',
-      }
+      },
     );
   }
 
   deleteRow(id) {
-    const newRowList = this.state.rowList;
+    const { rowList } = this.state;
+    const newRowList = rowList;
     newRowList.splice(id, 1);
 
-    this.setState({rowList: newRowList});
+    this.setState({ rowList: newRowList });
   }
 
   rowTextUpdate(event) {
-    this.setState({rowName: event.target.value});
+    this.setState({ rowName: event.target.value });
   }
 
   render() {
-    const rows = this.state.rowList.map((name, id) => (
+    const { rowList } = this.state;
+    const { rowName } = this.state;
+    const { name } = this.props;
+    const rows = rowList.map((newRowName, id) => (
       <Row
-        key={id}
-        name={name}
+        key={newRowName}
+        name={newRowName}
         id={id}
         clickAction={this.deleteRow}
       />
     ));
     return (
-      <div class="board">
-        <div class="board__name">
-          Board {this.props.name}
+      <div className="board">
+        <div className="board__name">
+          Board
+          { ' ' }
+          { name }
         </div>
-        <div class="row-wrapper">
+        <div className="row-wrapper">
           { rows }
         </div>
-        <form 
+        <form
           onSubmit={this.addRow}
-          class="new-row-form">
+          className="new-row-form"
+        >
           <input
             type="text"
             placeholder="Enter row name"
             onChange={this.rowTextUpdate}
-            value={this.state.rowName} />
-          <input type="submit" value="+"/>
+            value={rowName}
+          />
+          <input type="submit" value="+" />
         </form>
       </div>
-    )
+    );
   }
 }
 
-export default Board; 
+Board.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+export default Board;

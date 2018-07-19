@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextItem from './textItem';
 
 class ItemList extends React.Component {
@@ -12,79 +13,106 @@ class ItemList extends React.Component {
 
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.deleteItemsList = this.deleteItemsList.bind(this);
     this.itemTextUpdate = this.itemTextUpdate.bind(this);
-
   }
 
   addItem(event) {
     event.preventDefault();
-    if(this.state.itemName === '') {
+    const { itemName } = this.state;
+    const { items } = this.state;
+    if (itemName === '') {
       alert('Please enter a item name');
       return;
     }
-    if(this.state.items.indexOf(this.state.itemName) !== -1) {
+    if (items.indexOf(itemName) !== -1) {
       alert('Please enter a NEW rowItem name');
       return;
     }
-    const newItems = this.state.items;
-    newItems.push(this.state.itemName);
+    const newItems = items;
+    newItems.push(itemName);
 
-    this.setState({items: newItems});
+    this.setState(
+      {
+        items: newItems,
+        itemName: '',
+      },
+    );
   }
 
   deleteItem(id) {
-    const newItems = this.state.items;
+    const { items } = this.state;
+    const newItems = items;
     newItems.splice(id, 1);
 
-    this.setState({items: newItems});
+    this.setState({ items: newItems });
+  }
+
+  deleteItemsList() {
+    const { id } = this.props;
+    const { clickAction } = this.props;
+    clickAction(id);
   }
 
   itemTextUpdate(event) {
-    this.setState({itemName: event.target.value});
+    this.setState({ itemName: event.target.value });
   }
 
   render() {
-    const items = this.state.items.map((text, id) => (
+    const { items } = this.state;
+    const { name } = this.props;
+    const { itemName } = this.state;
+    const listItems = items.map((text, id) => (
       <TextItem
-        key={id}
+        key={text}
         text={text}
         id={id}
         clickAction={this.deleteItem}
       />
     ));
     return (
-      <div class="items-list row-item">
-        <div class="items-list__top-line">
-          <div class="items-list__header">
-            { this.props.name }
+      <div className="items-list row-item">
+        <div className="items-list__top-line">
+          <div className="items-list__header">
+            { name }
           </div>
-          <div class="items-list__menu-button fa fa-bars">
-            <div class="items-list__menu">
-              <div
-                onClick={this.props.clickAction.bind(this, this.props.id )}
-                class="items-list__delete"
+          <div className="items-list__menu-button fa fa-bars">
+            <div className="items-list__menu">
+              <button
+                type="button"
+                onClick={this.deleteItemsList}
+                className="items-list__delete"
               >
                 Delete Item
-              </div>
+              </button>
             </div>
           </div>
         </div>
-        <div class="items-list__items">
-          {items}
+        <div className="items-list__items">
+          { listItems }
+          <form
+            onSubmit={this.addItem}
+            className="new-item-form"
+          >
+            <input
+              type="text"
+              placeholder="Enter item text"
+              onChange={this.itemTextUpdate}
+              value={itemName}
+            />
+            <input type="submit" value="+" />
+          </form>
         </div>
-        <form 
-          onSubmit={this.addItem}
-          class="new-item-form">
-          <input
-            type="text"
-            placeholder="Enter item text"
-            onChange={this.itemTextUpdate}
-            value={this.state.itemName} />
-          <input type="submit" />
-        </form>
+
       </div>
-    )
+    );
   }
 }
+
+ItemList.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  clickAction: PropTypes.func.isRequired,
+};
 
 export default ItemList;
